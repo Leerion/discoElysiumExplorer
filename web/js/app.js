@@ -48,7 +48,6 @@ const app = new Vue({
   methods:{
     refreshActors: function() {
       $('#selectActor').selectpicker("refresh");
-      console.log('test');
     },
     fillConversation:function(inputConversation, inputDialogue) {
       this.conversationId = inputConversation
@@ -76,7 +75,6 @@ const app = new Vue({
               } else {
                 this.dialogueSearch.notFound = true;
               }
-              console.log(this.dialogueSearch.result)
           })
           .catch(error => {
               //handle error
