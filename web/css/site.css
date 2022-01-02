@@ -1,0 +1,219 @@
+main > .container {
+    padding: 70px 15px 20px;
+}
+
+.footer {
+    background-color: #f5f5f5;
+    font-size: .9em;
+    height: 60px;
+}
+
+.footer > .container {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.not-set {
+    color: #c55;
+    font-style: italic;
+}
+
+/* add sorting icons to gridview sort links */
+a.asc:after, a.desc:after {
+    content: '';
+    left: 3px;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border: solid 5px transparent;
+    margin: 4px 4px 2px 4px;
+    background: transparent;
+}
+
+a.asc:after {
+    border-bottom: solid 7px #212529;
+    border-top-width: 0;
+}
+
+a.desc:after {
+    border-top: solid 7px #212529;
+    border-bottom-width: 0;
+}
+
+.grid-view th {
+    white-space: nowrap;
+}
+
+.hint-block {
+    display: block;
+    margin-top: 5px;
+    color: #999;
+}
+
+.error-summary {
+    color: #a94442;
+    background: #fdf7f7;
+    border-left: 3px solid #eed3d7;
+    padding: 10px 20px;
+    margin: 0 0 15px 0;
+}
+
+/* align the logout "link" (button in form) of the navbar */
+.nav li > form > button.logout {
+    padding-top: 7px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+@media(max-width:767px) {
+    .nav li > form > button.logout {
+        display:block;
+        text-align: left;
+        width: 100%;
+        padding: 10px 0;
+    }
+}
+
+.nav > li > form > button.logout:focus,
+.nav > li > form > button.logout:hover {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.nav > li > form > button.logout:focus {
+    outline: none;
+}
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.menu {
+    overflow-y: scroll;
+    height: 100vh;
+    background-color: white;
+    font-size: 10pt;
+    border-right: thick solid grey;
+}
+
+.menu_blocker {
+    position: absolute;
+    z-index: -10;
+    height: 100vh;
+    width: 100%;
+    margin-left: -25px;
+}
+
+.menu_blocker_active {
+    z-index: 10;
+}
+
+.menu-blocker-bg{
+    height: 100vh;
+    width: 100%;
+    opacity: 0.3;
+    background-color: black;
+    position: absolute;
+}
+
+.spinner_loader {
+    position: absolute;
+    margin-top: 50vh;
+    opacity: 1 !important;
+    margin-left: 25%;
+}
+
+.bootstrap-select {
+    /*width: 100% !important;*/
+    /*width:172px !important; */
+    
+}
+
+.dropdown-menu {
+    transform: none !important;
+    /*margin-left: -15px;*/
+    /*width:172px !important; */
+}
+
+.forms{
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.text-search-result {
+    overflow-y: scroll;
+    max-height: 200px;
+}
+
+#cy_klay {
+    height: 100vh;
+}
+
+.modal-backdrop {
+    background-color: #000;
+    opacity: 0.2;
+}
+
+.row {
+    margin-right: 0px;
+}
+
+label {
+    margin-bottom: 0rem;
+}
+
+.dropdown-menu {
+    margin-left: 105px !importan;
+}
+
+.legend {
+    width: 200px;
+    height: 180px;
+    z-index: 999;
+    position: absolute;
+    top: 5px; left: 5px;
+}
+
+.inner-legend {
+    margin-left: 5px;
+}
+
+.inner-legend > ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+
+}
+
+.dot {
+  height: 25px;
+  width: 25px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  margin-top: 15px;
+
+}
+
+.dot > p {
+    width: 200px;
+    margin-left: 30px;
+}
+
+.dot.red {
+  background-color: red; 
+  border-radius: 0%;
+}
+
+.dot.orange {
+  background-color: orange;
+}
+
+.dot.blue {
+  background-color: #1E90FF;
+}
+
+.btn-secondary {
+    margin-top: 5px;
+    width: 100%;
+}
