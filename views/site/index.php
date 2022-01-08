@@ -87,7 +87,23 @@
     <div id="conversationBuilder" class="collapse" aria-labelledby="headingOne" data-parent="#menuList">
       <div class="card-body">
       	<h5 class="forms"> Visualize </h5>
-				<form @submit="onSubmitConversation" method="post" class="forms">
+
+      	<form @submit="onSubmitConversation" method="post" class="forms">
+					<div class="form-group" v-if="useTranslation">
+						<label>Second language</label>
+					 	<select v-model="dialogueSearchForm.language" class="selectpicker form-control dropdown-menu-left" data-live-search="true" id='selectActor'>
+							<option value="-1" selected default>None</option>
+							<option value="ch">Chinese</option>
+							<option value="tr_ch">Traditional Chinese</option>
+							<option value="de">German</option>
+						  <option value="ko">Korean</option>
+						  <option value="pl">Polish</option>
+						  <option value="po">Portuguese</option>
+						  <option value="ru">Russian</option>
+						  <option value="sp">Spanish</option>
+						</select>
+					</div>
+				
 					<div class="form-group">
 						<label>Conversation Id</label>
 					 	<input v-model="conversationId" class="form-control">
@@ -114,6 +130,17 @@
         </template>
         <div class="d-block">
           <p>{{ selectedNode.text }}</p>
+        </div>
+        <div class="d-block" v-if="selectedNode.isLoading">
+          <button class="btn btn-primary" type="button" disabled>
+					  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+					  Loading translation...
+					</button>
+        </div>
+
+        <div class="d-block" v-if='useTranslation && selectedNode.altText'>
+        	<hr>
+          <p>{{ selectedNode.altText }}</p>
         </div>
         <audio controls v-if="selectedNode.voiceLine  !== null">
           <source :src="selectedNode.voiceLine" type="audio/aac">

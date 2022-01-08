@@ -92,6 +92,8 @@ class SiteController extends Controller
                         'title' => $node->title,
                         'text' => $node->text,
                         'voiceLine' => $node->audio,
+                        'articyId' => $node->articyId,
+                        'type' => $node->entryType
                     ],
                     'classes' => $node->class
                 ];
@@ -109,6 +111,20 @@ class SiteController extends Controller
             }
 
             return $result;
+        }
+
+        return null;
+    }
+
+    public function actionNodeTranslation()
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $request = Json::decode(file_get_contents("php://input"));
+
+        $node = dialogues::find()->where(['articyId' => $request['articyId']])->one();
+
+        if($node) {
+            return $node->translate($request['language']);
         }
 
         return null;

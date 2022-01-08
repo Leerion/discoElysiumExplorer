@@ -5,6 +5,7 @@ use Yii;
 use yii\db\ActiveRecord;
 use app\models\links;
 use app\models\actors;
+use app\models\translations;
 
 class dialogues extends ActiveRecord
 {
@@ -18,6 +19,18 @@ class dialogues extends ActiveRecord
         $links = links::find()->where(['originIndex' => $this->index, 'outputConversationId' => $this->conversationId])->all();
 
         return $links;
+    }
+
+    public function translate($lang)
+    {   
+        if($lang != -1) {
+            $translation = translations::find()->where(['dialogueId' => $this->articyId, 'lang' => $lang])->one();
+
+            if($translation)
+                return $translation->text;
+        }
+
+        return null;
     }
 
     public function getActor() 

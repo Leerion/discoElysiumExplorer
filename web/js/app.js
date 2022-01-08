@@ -6,10 +6,12 @@ const app = new Vue({
     elements: [],
     isLoading: false,
     actors: [],
+    useTranslation: false,
     dialogueSearchForm: {
       dialogue:null,
       actorId:-1,
-      softSearch: false
+      softSearch: false,
+      language:-1
     },
     dialogueSearch:{
       result: [],
@@ -19,7 +21,9 @@ const app = new Vue({
     {
       title: '',
       text: '',
+      altText: '',
       voiceLine: '',
+      isLoading: true
     },
     showModal: false
 
@@ -27,7 +31,7 @@ const app = new Vue({
   mounted:function(){
       axios({
           method: 'post',
-          url: '/site/actors', // make sure your endpoint is correct
+          url: '/site/actors',
           headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
            } 
@@ -36,7 +40,6 @@ const app = new Vue({
           this.actors = response.data
       })
       .catch(error => {
-          //handle error
           console.log(this);
       }); 
 
@@ -57,7 +60,7 @@ const app = new Vue({
         evt.preventDefault();
         axios({
               method: 'post',
-              url: '/site/search', // make sure your endpoint is correct
+              url: '/site/search',
               data: {
                 dialogue: this.dialogueSearchForm.dialogue,
                 actorId: this.dialogueSearchForm.actorId,
@@ -77,7 +80,6 @@ const app = new Vue({
               }
           })
           .catch(error => {
-              //handle error
               console.log(this);
           });
     },
@@ -89,7 +91,8 @@ const app = new Vue({
               method: 'post',
               url: '/site/build',
               data: {
-                conversationId: this.conversationId
+                conversationId: this.conversationId,
+                secondLanguage: this.dialogueSearchForm.language
               },
               headers: {
                   'Content-Type': 'application/x-www-form-urlencoded',
@@ -102,7 +105,7 @@ const app = new Vue({
               cytoscape.use(cytoscapeKlay);
               
               const klayGraph = cytoscape({
-                container: $('#cy_klay'), // container to render in
+                container: $('#cy_klay'),
                 elements: this.elements,
                 layout: {
                   name: 'klay',
@@ -138,7 +141,7 @@ const app = new Vue({
                         'line-color': '#ccc',
                         'target-arrow-color': '#ccc',
                         'curve-style': 'bezier',
-                        'target-arrow-shape': 'triangle' // there are far more options for this property here: http://js.cytoscape.org/#style/edge-arrow
+                        'target-arrow-shape': 'triangle'
                       },
                     },
 
@@ -211,9 +214,13 @@ const app = new Vue({
 
     nodeInfo: function(node) {
       node = node.data()
+
       this.selectedNode['id'] = node.id
       this.selectedNode['title'] = node.title
       this.selectedNode['text'] = node.text
+      this.selectedNode['isLoading'] = true
+      this.selectedNode['altText'] = ''
+
       if(node.voiceLine) {
         this.selectedNode['voiceLine'] = 'assets/AudioClip_aac/'+node.voiceLine
       }
@@ -221,8 +228,32 @@ const app = new Vue({
         this.selectedNode['voiceLine'] = null 
       }
 
-      this.$bvModal.show('bv-modal-example')
+      if(this.dialogueSearchForm.language != -1 && node.type == 'DialogueFragment') {
+        axios({
+          method: 'post',
+          url: '/site/node-translation',
+          data: {
+            articyId: node.articyId,
+            language: this.dialogueSearchForm.language
+          },
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+           } 
+        })
+        .then(response => {
+            this.selectedNode['altText'] = response.data
+            this.selectedNode['isLoading'] = false
+        })
+        .catch(error => {
+            console.log(this);
+        });
+      } else {
+        this.selectedNode['altText'] = ''
+        this.selectedNode['isLoading'] = false
+      }
 
+      this.$bvModal.show('bv-modal-example')
+      
     },
 
     searchNode: function(e) {
