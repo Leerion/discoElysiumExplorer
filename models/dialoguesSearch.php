@@ -26,8 +26,13 @@ class dialoguesSearch extends \yii\base\Model
         }
 
         if($this->softSearch) {
-            $sqlCondition = "SELECT *, MATCH(text) AGAINST ('$searchText' IN BOOLEAN MODE) as score FROM dialogues where MATCH(text) AGAINST ('$searchText' IN BOOLEAN MODE) ORDER BY score DESC";
+            $sqlCondition = "SELECT *, MATCH(text) AGAINST ('$searchText' IN BOOLEAN MODE) as score FROM dialogues where MATCH(text) AGAINST ('$searchText' IN BOOLEAN MODE)";
 
+            if($this->actorId > -1) {
+                $sqlCondition .= " and actorId = '".$this->actorId."'";
+            }
+
+            $sqlCondition .= " ORDER BY score DESC";
             $result = dialogues::findBySql($sqlCondition);
 
         } else {
@@ -35,15 +40,14 @@ class dialoguesSearch extends \yii\base\Model
                 ('\"$searchText\"' IN BOOLEAN MODE)";
             $result = dialogues::find()
             ->where($whereCondition);
-        }
-        
-        if($this->actorId > -1) {
-            $result = $result->andWhere(['actorId' => $this->actorId]);
+
+            if($this->actorId > -1) {
+                $result = $result->andWhere(['actorId' => $this->actorId]);
+            }
         }
 
         $result = $result->limit(30)->asArray()->all(); 
 
-        Yii::error(print_r($result, true), 'sqlResult');
         return $result;
         
     }

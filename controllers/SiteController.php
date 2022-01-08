@@ -133,7 +133,7 @@ class SiteController extends Controller
     public function actionActors() {
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-        $actors = actors::find()->where(['IsNPC' => 'true'])->asArray()->all();
+        $actors = actors::find()->asArray()->all();
 
         return $actors;
     }
