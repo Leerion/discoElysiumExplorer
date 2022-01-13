@@ -44,7 +44,7 @@ class dialogues extends ActiveRecord
 
         if($class == 'DialogueFragment' || $class == 'Fork'){
             if($class == 'DialogueFragment') {
-                if($this->actor->color > 1){
+                if($this->actor && $this->actor->color > 1){
                     return 'InnerDemons';
                 }
             }
