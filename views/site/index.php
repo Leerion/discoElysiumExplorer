@@ -1,3 +1,7 @@
+<?php 
+$this->title = 'Disco Elysium Explorer';
+?>
+
 <div id="app">
 	<div class="row">
 	<div class="col-md-3">
