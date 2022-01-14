@@ -6,7 +6,7 @@ const app = new Vue({
     elements: [],
     isLoading: false,
     actors: [],
-    useTranslation: false,
+    useTranslation: true,
     dialogueSearchForm: {
       dialogue:null,
       actorId:-1,
@@ -23,7 +23,8 @@ const app = new Vue({
       text: '',
       altText: '',
       voiceLine: '',
-      isLoading: true
+      isLoading: true,
+      selected: false
     },
     showModal: false
 
@@ -252,7 +253,7 @@ const app = new Vue({
         this.selectedNode['isLoading'] = false
       }
 
-      this.$bvModal.show('bv-modal-example')
+      this.selectedNode['selected'] = true
       
     },
 
@@ -273,6 +274,11 @@ const app = new Vue({
     },
   }
 })
+
+Split(['#m','#c'], {
+  sizes: [20, 80],
+});
+
 
 $( ".legend" ).draggable({
   containment: "parent"

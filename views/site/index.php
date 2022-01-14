@@ -3,8 +3,9 @@ $this->title = 'Disco Elysium Explorer';
 ?>
 
 <div id="app">
-	<div class="row">
-	<div class="col-md-3">
+	<div class="split">
+	<!-- <div class="col-md-4"> -->
+	<div id="m">
 	<div v-bind:class="{'menu_blocker': true, 'menu_blocker_active': isLoading}" >
 		<div class="menu-blocker-bg"></div>
 		<button class="btn btn-primary spinner_loader" type="button" disabled>
@@ -119,44 +120,39 @@ $this->title = 'Disco Elysium Explorer';
 					<div class="form-group">
 						<label>Dialogue Id</label>
 						<input v-model="dialogueId" :disabled="conversationId == null" class="form-control">
-						<input type="submit" class="btn btn-secondary" :disabled="conversationId == null" value="Search node">  
+						<input type="submit" class="btn btn-secondary" :disabled="conversationId == null" value="Search node (or fix cursor)">  
 					</div>
 			  </form>
+
+			  <div id="node-info" class="card card-body bg-light" v-if='selectedNode.selected'>
+			  	<p><b>{{ selectedNode.title.split(': ')[0] }}:</b> {{ selectedNode.text }}</p>
+			  	<div class="d-block" v-if="selectedNode.isLoading">
+          <button class="btn btn-primary" type="button" disabled style="margin-bottom:15px;">
+						  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+						  Loading translation...
+						</button>
+	        </div>
+
+	        <div class="d-block" v-if='useTranslation && selectedNode.altText'>
+	        	<hr>
+	          <p>{{ selectedNode.altText }}</p>
+	        </div>
+	        <audio controls v-if="selectedNode.voiceLine  !== null">
+	          <source :src="selectedNode.voiceLine" type="audio/aac">
+	          Your browser does not support the audio element.
+	        </audio>
+
+			  </div>
+			  <br>
 			</div>
 		</div>
 	</div>
 	</div>
-
-	<div>
-        <b-modal id="bv-modal-example" hide-footer>
-        <template #modal-title>
-          {{ selectedNode.title }}
-        </template>
-        <div class="d-block">
-          <p>{{ selectedNode.text }}</p>
-        </div>
-        <div class="d-block" v-if="selectedNode.isLoading">
-          <button class="btn btn-primary" type="button" disabled>
-					  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-					  Loading translation...
-					</button>
-        </div>
-
-        <div class="d-block" v-if='useTranslation && selectedNode.altText'>
-        	<hr>
-          <p>{{ selectedNode.altText }}</p>
-        </div>
-        <audio controls v-if="selectedNode.voiceLine  !== null">
-          <source :src="selectedNode.voiceLine" type="audio/aac">
-          Your browser does not support the audio element.
-        </audio>
-        
-      </div>
-
-      </div>
-    </div>
-    <div class="col-md-9">
-
+  </div>
+  </div> <!-- sorry --><!-- 
+  <div class="gutter gutter-vertical"></div> -->
+    <!-- <div class="col-md-8"> -->
+    <div id="c">
             <div class="legend shadow p-3 mb-5 bg-light rounded"> 
               <div class="inner-legend">
                 <b>Legend:</b>
