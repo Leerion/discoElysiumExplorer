@@ -137,7 +137,7 @@ $this->title = 'Disco Elysium Explorer';
 	        	<hr>
 	          <p>{{ selectedNode.altText }}</p>
 	        </div>
-	        <audio controls v-if="selectedNode.voiceLine  !== null">
+	        <audio controls v-if="selectedNode.voiceLine  !== null" :src="selectedNode.voiceLine">
 	          <source :src="selectedNode.voiceLine" type="audio/aac">
 	          Your browser does not support the audio element.
 	        </audio>
